@@ -35,7 +35,10 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
         newfile.write(headerPrint[x] + delimiterOutput)
         x += 1
     y = 1
+    h = 1 #to count lines searched
     for line in readerFile:
+        print "line " + str(h) + " processed."  #print the line currently being searched
+        h += 1
         if fieldSearch <> "allfields": #if a specific field is chosen
             partsofLine = line.split(delimiterInput) #split lines one by one with the initial delimiter
             linebylinenum = len(partsofLine)
@@ -96,10 +99,4 @@ if filenameOutput == '':
     filenameOutput = 'newfile.txt'
 #run the function processFile
 processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, filenameOutput, filename, fieldNums)
-#currently getting the following error, which i think is because of malformatted records:
-#Traceback (most recent call last):
-#File "extract.py", line 98, in <module>
-# processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, filenameOutput, filename, fieldNums)
-#File "extract.py", line 44, in processFile
-#if termToSearch in partsofLine[int(fieldSearch)]: #if the term is found in the specific field
-#IndexError: list index out of range
+ 
