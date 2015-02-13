@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 import os
+import re #regular expressions
+import csv
+
 #select file
 #display first line of file
 #choose delimiter
@@ -16,51 +19,69 @@ import os
 #with results create a new textfile
 def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, filenameOutput, filename, fieldNums):
     #open the original textfile
-    readerFile = open(filename, 'r')
-    #open the new file to export to 
+    #readerFile = open(filename, 'r')
     newfile = open(filenameOutput, 'w')
+    with open(filename, 'rb') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=delimiterInput, quotechar='|')
+        rownum = 0
+        for row in spamreader:
+            if rownum == 0:
+                newfile.write(delimiterOutput.join(row))
+            else:
+                if termToSearch in row:
+                    #print "Found the text " + termToSearch + "in line number: " + str(rownum) + "\n"
+                    if row[int(fieldSearch)] == termToSearch:
+                        newfile.write(delimiterOutput.join(row) + '\n')
+            rownum += 1
+
+    #open the new file to export to 
+    
+    
     #read lines from file
-    header = readerFile.readlines()
+    #header = readerFile.readlines()
     #using the initial delimiter, extract the first line for the file that contains
     #field names
-    headerPrint = header[0].split(delimiterInput)
+    #headerPrint = header[0].split(delimiterInput)
     #close that file
-    readerFile.close()
+    #readerFile.close()
     #open the file again in order to process the data
-    readerFile = open(filename, 'r')
+    #readerFile = open(filename, 'r')
     #write the header with field names to the new file
     
-    x = 0
-    while x < fieldNums:
-        newfile.write(headerPrint[x] + delimiterOutput)
-        x += 1
+    '''
     y = 1
     h = 1 #to count lines searched
-    for line in readerFile:
+    for line in spamreader:
         print "line " + str(h) + " processed."  #print the line currently being searched
         h += 1
         if fieldSearch <> "allfields": #if a specific field is chosen
-            partsofLine = line.split(delimiterInput) #split lines one by one with the initial delimiter
-            linebylinenum = len(partsofLine)
-            if linebylinenum <> fieldNums:
-                print "mismatched number of fields on "
-            if termToSearch in partsofLine[int(fieldSearch)]: #if the term is found in the specific field
-                print str(y) + " record(s) added to " + filenameOutput #show number of records being added to file
-                y += 1
-                x = 0
-                while x < fieldNums: #write data into new file if text can be found in the field
-                    newfile.write(partsofLine[x] + delimiterOutput) 
-                    x += 1
+            if termToSearch in line:
+                partsofLine = line.split(delimiterInput) #split lines one by one with the initial delimiter
+                linebylinenum = len(partsofLine)
+                if linebylinenum <> fieldNums:
+                    print "mismatched number of fields on "
+                if termToSearch in partsofLine[int(fieldSearch)]: #if the term is found in the specific field
+                    print str(y) + " record(s) added to " + filenameOutput #show number of records being added to file
+                    y += 1
+                    t = 0
+                    while t < fieldNums: #write data into new file if text can be found in the field
+                        newfile.write(partsofLine[t] + delimiterOutput) 
+                        t += 1
+            else:
+                print "not found in line # " + str(h)
         else: #if any field should be searched
             if termToSearch in line: #if term is found anywhere in the line
                 newfile.write(line)
                 print line
+            else:
+                print "not found in line # " + str(h)
     newfile.close() #once finished processing, close both the input and output files
     readerFile.close()
+    '''
+    
 filename = raw_input("what file would you like to extract from? ") 
 path = './'
-filename = "AddressPoints.txt" #only temporary...because i am doings this over and over
-                                #when starting this
+
 print "You will be searching and extracting from " + filename
 with open(filename, 'r') as f:
     lines = f.readlines()
