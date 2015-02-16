@@ -28,9 +28,14 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
             if rownum == 0:
                 newfile.write(delimiterOutput.join(row))
             else:
-                if termToSearch in row:
-                    #print "Found the text " + termToSearch + "in line number: " + str(rownum) + "\n"
-                    if row[int(fieldSearch)] == termToSearch:
+                if fieldSearch <> "allfields": #if term can only be in one specific field
+                    if termToSearch in row:
+                        if row[int(fieldSearch)] == termToSearch: #if the term is found in the specific field, print it
+                            print "Found the text " + termToSearch + " in line number: " + str(rownum) +  " and in field #" + str(fieldSearch) + "\n"
+                            newfile.write(delimiterOutput.join(row) + '\n') #join all values of row with the new delimiter and print it into the new file
+                else: #if the term can be in any field
+                    if termToSearch in row:
+                        print "Found the text " + termToSearch + " in line number: " + str(rownum) + "\n"
                         newfile.write(delimiterOutput.join(row) + '\n')
             rownum += 1
 
