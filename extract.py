@@ -26,16 +26,16 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
         rownum = 0
         for row in spamreader:
             if rownum == 0:
-                newfile.write(delimiterOutput.join(row))
+                newfile.write(delimiterOutput.join(row) + '\n')
             else:
                 if fieldSearch <> "allfields": #if term can only be in one specific field
                     if termToSearch in row:
                         if row[int(fieldSearch)] == termToSearch: #if the term is found in the specific field, print it
-                            print "Found the text " + termToSearch + " in line number: " + str(rownum) +  " and in field #" + str(fieldSearch) + "\n"
+                            print "Found the text " + "'" + termToSearch + "' in line number: " + str(rownum) +  " and in field #" + str(fieldSearch) + "\n"
                             newfile.write(delimiterOutput.join(row) + '\n') #join all values of row with the new delimiter and print it into the new file
                 else: #if the term can be in any field
-                    if termToSearch in row:
-                        print "Found the text " + termToSearch + " in line number: " + str(rownum) + "\n"
+                    if termToSearch in row: #i need to change this to "like" instead so that it looks for strings inside each word
+                        print "Found the text " + "'" + termToSearch + "' in line number: " + str(rownum) + "\n"
                         newfile.write(delimiterOutput.join(row) + '\n')
             rownum += 1
 
