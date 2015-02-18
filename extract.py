@@ -90,8 +90,9 @@ path = './'
 print "You will be searching and extracting from " + filename
 with open(filename, 'r') as f:
     rownum = 0
+    print str(rownum) + "\n"
     if rownum == 0:
-        lines = f.readlines()
+        lines = f.readlines(0)
         rownum += 1
     print "The first line of your file is the following: \n" #show first line for user to be able to determine the delimiter
     print lines[0]
