@@ -53,36 +53,7 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
     #readerFile = open(filename, 'r')
     #write the header with field names to the new file
     
-    '''
-    y = 1
-    h = 1 #to count lines searched
-    for line in spamreader:
-        print "line " + str(h) + " processed."  #print the line currently being searched
-        h += 1
-        if fieldSearch <> "allfields": #if a specific field is chosen
-            if termToSearch in line:
-                partsofLine = line.split(delimiterInput) #split lines one by one with the initial delimiter
-                linebylinenum = len(partsofLine)
-                if linebylinenum <> fieldNums:
-                    print "mismatched number of fields on "
-                if termToSearch in partsofLine[int(fieldSearch)]: #if the term is found in the specific field
-                    print str(y) + " record(s) added to " + filenameOutput #show number of records being added to file
-                    y += 1
-                    t = 0
-                    while t < fieldNums: #write data into new file if text can be found in the field
-                        newfile.write(partsofLine[t] + delimiterOutput) 
-                        t += 1
-            else:
-                print "not found in line # " + str(h)
-        else: #if any field should be searched
-            if termToSearch in line: #if term is found anywhere in the line
-                newfile.write(line)
-                print line
-            else:
-                print "not found in line # " + str(h)
-    newfile.close() #once finished processing, close both the input and output files
-    readerFile.close()
-    '''
+  
     
 filename = raw_input("what file would you like to extract from? ") 
 path = './'
