@@ -59,24 +59,28 @@ filename = raw_input("what file would you like to extract from? ")
 path = './'
 
 print "You will be searching and extracting from " + filename
-with open(filename, 'r') as f:
-    rownum = 0
-    print str(rownum) + "\n"
-    if rownum == 0:
-        lines = f.readlines(0)
-        rownum += 1
-    print "The first line of your file is the following: \n" #show first line for user to be able to determine the delimiter
-    print lines[0]
-    #select the delimiter to use
-    delimiterInput = raw_input("What delimiter is your file using? leave blank if unformatted ")
-    #if not delimiter is specified, the script will use space as delimiter
-    if delimiterInput == '':
-        delimiterInput = ' '    
-    print "The fields and field numbers are the following: \n" #show all fields with their number
-    fields = lines[0].split(delimiterInput)
-    #print fields[0] #prints the first field
-    fieldNums = len(fields) #determine how many fields there are in each line
-    f.close() #close the input file
+rownum = 0
+print "The first line of your file is the following: \n" #show first line for user to be able to determine the delimiter
+with open(filename, 'rb') as f:
+#    if rownum == 0:
+#       rownum += 1
+    for row in f:
+#    lines = f.readlines(0)
+        if rownum == 0:
+            print row
+            rownum += 1
+        break
+#print lines[0]
+#select the delimiter to use
+delimiterInput = raw_input("What delimiter is your file using? leave blank if unformatted ")
+#if not delimiter is specified, the script will use space as delimiter
+if delimiterInput == '':
+    delimiterInput = ' '    
+print "The fields and field numbers are the following: \n" #show all fields with their number
+#fields = lines[0].split(delimiterInput)
+fields = row.split(delimiterInput)
+#print fields[0] #prints the first field
+fieldNums = len(fields) #determine how many fields there are in each line
 x = 0
 while x < fieldNums: #shows the field names with their numbers in the file
         print str(x) + ' ' + fields[x]
