@@ -3,40 +3,59 @@
 import os
 import re #regular expressions
 import csv
-from collections import Counter
 
+#select file
+#display first line of file
+#choose delimiter
+#choose field to search (number)
+#choose text to search
+#run through extraction
+#select new delimiter
+#save to new file (must create new filename from search) 
+#selecting the filename
 
+#process the text file with delimiter, new delimiter
+#search the text file using a specific field, or not
+#with results create a new textfile
 def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, filenameOutput, filename, fieldNums):
     #open the original textfile
     #readerFile = open(filename, 'r')
     newfile = open(filenameOutput, 'w')
-    
     with open(filename, 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=delimiterInput, quotechar='|')
         rownum = 0
-        numberFound = 1
         for row in spamreader:
             if rownum == 0:
                 newfile.write(delimiterOutput.join(row) + '\n')
             else:
                 if fieldSearch <> "allfields": #if term can only be in one specific field
-                    rowContents = str(row)
-                    if termToSearch.lower() in rowContents.lower():
-                    	print termToSearch + " " + termToSearch.lower() + "\n" + rowContents + "\n" + rowContents.lower()
-                        print numberFound
-                    	fieldContents = row[int(fieldSearch)]
-                        #if termToSearch in row[int(fieldSearch)] : #if the term is found in the specific field, print it
-                        if termToSearch.lower() in fieldContents.lower() : #if the term is found in the specific field, print it
+                    if termToSearch in row:
+                        if row[int(fieldSearch)] == termToSearch: #if the term is found in the specific field, print it
                             print "Found the text " + "'" + termToSearch + "' in line number: " + str(rownum) +  " and in field #" + str(fieldSearch) + "\n"
                             newfile.write(delimiterOutput.join(row) + '\n') #join all values of row with the new delimiter and print it into the new file
                 else: #if the term can be in any field
-                    rowContents = str(row)
-                    if termToSearch.lower() in rowContents.lower() : #i need to change this to "like" instead so that it looks for strings inside each word
+                    if termToSearch in row: #i need to change this to "like" instead so that it looks for strings inside each word
                         print "Found the text " + "'" + termToSearch + "' in line number: " + str(rownum) + "\n"
                         newfile.write(delimiterOutput.join(row) + '\n')
             rownum += 1
 
-filename = raw_input("what file would you like to query and extract from? ") 
+    #open the new file to export to 
+    
+    
+    #read lines from file
+    #header = readerFile.readlines()
+    #using the initial delimiter, extract the first line for the file that contains
+    #field names
+    #headerPrint = header[0].split(delimiterInput)
+    #close that file
+    #readerFile.close()
+    #open the file again in order to process the data
+    #readerFile = open(filename, 'r')
+    #write the header with field names to the new file
+    
+  
+    
+filename = raw_input("what file would you like to extract from? ") 
 path = './'
 
 print "You will be searching and extracting from " + filename
@@ -85,3 +104,4 @@ if filenameOutput == '':
     filenameOutput = 'newfile.txt'
 #run the function processFile() with the following filled variables from above
 processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, filenameOutput, filename, fieldNums) 
+ 
