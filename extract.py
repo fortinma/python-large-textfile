@@ -14,7 +14,6 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
     with open(filename, 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=delimiterInput, quotechar='|')
         rownum = 0
-        numberFound = 1
         for row in spamreader:
             if rownum == 0:
                 newfile.write(delimiterOutput.join(row) + '\n')
@@ -23,7 +22,6 @@ def processFile(fieldSearch, termToSearch, delimiterOutput, delimiterInput, file
                     rowContents = str(row)
                     if termToSearch.lower() in rowContents.lower():
                     	print termToSearch + " " + termToSearch.lower() + "\n" + rowContents + "\n" + rowContents.lower()
-                        print numberFound
                     	fieldContents = row[int(fieldSearch)]
                         #if termToSearch in row[int(fieldSearch)] : #if the term is found in the specific field, print it
                         if termToSearch.lower() in fieldContents.lower() : #if the term is found in the specific field, print it
