@@ -1,5 +1,7 @@
 #!/usr/bin/python
 #script to search a text file, delimited or not and create analytics (summaries) for all terms used.
+#the new file will be delimited based on the user's preference.
+
 import os
 import re #regular expressions
 import csv
@@ -35,15 +37,6 @@ def processFile(fieldSearch, delimiterOutput, delimiterInput, filenameOutput, fi
                     #newfile.write(delimiterOutput.join(row) + '\n')
             rownum += 1
     wordlist = wordstring.split('$$')
-#    print "wordstring: " + wordstring + '\n'
-#    print "wordlist: " + str(wordlist) + '\n' 
-#    print "w: "
-#    for w in wordlist:
-#        print w
-#        wordfreq.append(wordlist.count(w)) 
-#        print str(wordlist.count(w))
-#    newfile.write(delimiterOutput.join(str(zip(wordlist, wordfreq))))       
-#    newfile.write(str(zip(wordlist, wordfreq)))
     wordListToFreqDict(wordlist, newfile) # run function wordListtoFreqDict with our list of words and the newfile to write them to
 
 #################################
